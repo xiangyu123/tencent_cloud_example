@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import hashlib, hmac, json, os, sys, time
 from datetime import datetime
@@ -76,6 +77,7 @@ headers = {
 }
 print(headers)
 
+print('payload is', payload)
 r = requests.post(endpoint, headers=headers, data=payload)
 print(r.text)
 print(r.headers)
