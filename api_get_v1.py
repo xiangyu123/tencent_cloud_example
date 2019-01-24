@@ -58,7 +58,7 @@ actionData = "DescribeInstances"
 uriData = "cvm.tencentcloudapi.com"
 signMethod="HmacSHA256"
 requestMethod = "GET"
-regionData = "ap-hongkong"
+regionData = "ap-beijing"
 versionData = '2017-03-12'
 
 signDictData = {
