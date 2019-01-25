@@ -14,7 +14,7 @@ from pathlib import Path
 class TencentCommonService:
     # 初始化必须的公共参数 ["url", "service", "region", "version"]
     def __init__(self, **kw):
-        temp_dict = {"region": "ap-beijing", "version":"2017-03-12", "timestamp": int(time.time())}
+        temp_dict = {"version":"2017-03-12", "timestamp": int(time.time())}
         self.__dict__.update(temp_dict)
         for k,v in kw.items():
             if k not in ["url", "service", "region", "version", "Token"]:

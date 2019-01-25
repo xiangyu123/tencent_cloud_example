@@ -4,7 +4,7 @@
 import json
 from utils.TencentCommonService import TencentCommonService
 
-cvm_instance_example = TencentCommonService(url="https://cvm.tencentcloudapi.com", service="cvm")
+cvm_instance_example = TencentCommonService(url="https://cvm.tencentcloudapi.com", service="cvm", region="ap-beijing")
 #r = cvm_instance_example.execute_action("DescribeInstances", {"Limit": 10, "Offset": 0})
 r = cvm_instance_example.execute_action("DescribeInstances")
 print(r.text)
