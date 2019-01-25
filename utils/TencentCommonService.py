@@ -90,6 +90,9 @@ class TencentCommonService:
 
     # 发送Post请求，并返回Response
     def request_post(self):
+        print(self.url)
+        print(self.headers)
+        print(self.payload)
         r = requests.post(self.url, headers=self.headers, data=self.payload)
         return r
 

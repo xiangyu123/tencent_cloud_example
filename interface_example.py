@@ -36,6 +36,7 @@ def api_call(key, args={}):
     rargs.update(args)
     region = rargs.pop("region") if "region" in rargs.keys() else ""
     cvm_instance_example = TencentCommonService(url=interface_info['url'], service=interface_info['service'], region=region)
+    print(interface_info['action'])
     r = cvm_instance_example.execute_action(interface_info['action'], payload_dict=rargs)
     return r
 

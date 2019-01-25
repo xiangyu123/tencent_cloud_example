@@ -54,12 +54,11 @@ secretKey = "5whpvqjmluyqzpSu7KSHsMBTXAd8QFJJ"
 
 timeData = str(int(time.time()))
 nonceData = int(random.random()*10000) 
-actionData = "DescribeInstances"
-uriData = "cvm.tencentcloudapi.com"
+actionData = "ListUsers"
+uriData = "cam.api.qcloud.com"
 signMethod="HmacSHA256"
 requestMethod = "GET"
 regionData = "ap-beijing"
-versionData = '2017-03-12'
 
 signDictData = {
     'Action' : actionData,
@@ -68,10 +67,9 @@ signDictData = {
     'SecretId' : secretId,
     'SignatureMethod':signMethod,
     'Timestamp' : int(timeData),
-    'Version':versionData ,
 }
 
-requestStr = "%s%s%s%s%s"%(requestMethod,uriData,"/","?",signStrFun(signDictData))
+requestStr = "%s%s%s%s%s"%(requestMethod,uriData,"/v2/index.php","?",signStrFun(signDictData))
 
 signData = urllib.parse.quote(sign(secretKey,requestStr,signMethod))
 
