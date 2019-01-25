@@ -19,6 +19,7 @@ api_tables = {
         'params_default': {}
     },
     'user.list': {
+        'service': "cam",
         'url': 'https://cam.api.qcloud.com',
         'action': 'ListUsers',
         'params_default': {}
@@ -40,10 +41,20 @@ def api_call(key, args={}):
 
 
 if __name__ == "__main__":
-    c = api_call('cvm.list', {"region": "ap-beijing"})
-    print(c.text)
+#    # 查询北京的服务器
+#    c = api_call('cvm.list', {"region": "ap-beijing"})
+#    print(c.text)
+#
+#
+#    # 查询所有区域
+#    #d = api_call('area.list', {"region": ""})
+#    d = api_call('area.list')
+#    j = json.loads(d.text)
+#    print(json.dumps(j,indent=4, ensure_ascii=False))
 
-    #d = api_call('area.list', {"region": ""})
-    d = api_call('area.list')
-    j = json.loads(d.text)
-    print(json.dumps(j,indent=4, ensure_ascii=False))
+
+    # 查询所有用户
+    h = api_call('user.list')
+    print(h.text)
+    #k = json.loads(h.text)
+    #print(json.dumps(k,indent=4, ensure_ascii=False))
