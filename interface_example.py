@@ -20,7 +20,7 @@ api_tables = {
     },
     'user.list': {
         'service': "cam",
-        'url': 'https://cam.api.qcloud.com',
+        'url': 'https://cam.api.qcloud.com/v2/index.php',
         'action': 'ListUsers',
         'params_default': {}
     },
@@ -56,5 +56,5 @@ if __name__ == "__main__":
     # 查询所有用户
     h = api_call('user.list')
     print(h.text)
-    #k = json.loads(h.text)
-    #print(json.dumps(k,indent=4, ensure_ascii=False))
+    k = json.loads(h.text)
+    print(json.dumps(k,indent=4, ensure_ascii=False))
