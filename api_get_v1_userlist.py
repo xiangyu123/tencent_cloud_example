@@ -10,6 +10,7 @@ import urllib.request
 import requests
 import time
 import random
+import json
 
 def sign(secretKey, signStr, signMethod):
     if sys.version_info[0] > 2:
@@ -70,15 +71,19 @@ signDictData = {
 }
 
 requestStr = "%s%s%s%s%s"%(requestMethod,uriData,"/v2/index.php","?",signStrFun(signDictData))
+print(requestStr)
 
 signData = urllib.parse.quote(sign(secretKey,requestStr,signMethod))
 
 actionArgs = signDictData
 actionArgs["Signature"] = signData
 
-requestUrl = "https://%s/?"%(uriData)
+requestUrl = "https://%s/v2/index.php?"%(uriData)
+print(requestUrl)
 requestUrlWithArgs = requestUrl + dictToStr(actionArgs)
+print(requestUrlWithArgs)
 
 responseData = urllib.request.urlopen(requestUrlWithArgs).read().decode("utf-8")
+c = json.loads(responseData)
 
-print(responseData)
+print(json.dumps(c,indent=4))
