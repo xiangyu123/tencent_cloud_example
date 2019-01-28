@@ -27,7 +27,6 @@ api_tables = {
 
 }
 
-args={"region":"ap-beijing"}
 
 def api_call(key, args={}):
     interface_info = api_tables[key]
