@@ -31,10 +31,14 @@ def sign(secretKey, signStr, signMethod):
     return base64
 
 def dictToStr(dictData):
-    tempList = []
-    for eveKey, eveValue in dictData.items():
-        tempList.append(str(eveKey) + "=" + str(eveValue))
-    return "&".join(tempList)
+    x = '&'.join(["{}={}".format(k, v) for k, v in dictData.items()])
+    return x
+    #tempList = []
+    #for eveKey, eveValue in dictData.items():
+    #    tempList.append(str(eveKey) + "=" + str(eveValue))
+    #k = "&".join(tempList)
+    #print("k is", k)
+    #return k
 
 def signStrFun(dictData):
     tempList = []
@@ -48,7 +52,9 @@ def signStrFun(dictData):
     for eveData in tempList:
         tempStr = str(tempDict[eveData]) + "=" + str(dictData[tempDict[eveData]])
         resultList.append(tempStr)
-    return "&".join(resultList)
+    j = "&".join(resultList)
+    # print("j is", j)
+    return j
 
 secretId = "AKID8agSPCVa8C3rPLJe3CtLXU2OZVBFLpNH"
 secretKey = "5whpvqjmluyqzpSu7KSHsMBTXAd8QFJJ"
@@ -67,11 +73,11 @@ signDictData = {
     'Region' : regionData,
     'SecretId' : secretId,
     'SignatureMethod':signMethod,
-    'Timestamp' : int(timeData),
+    'Timestamp': int(timeData),
 }
 
 requestStr = "%s%s%s%s%s"%(requestMethod,uriData,"/v2/index.php","?",signStrFun(signDictData))
-print(requestStr)
+print('requestStr is ', requestStr)
 
 signData = urllib.parse.quote(sign(secretKey,requestStr,signMethod))
 
