@@ -19,25 +19,32 @@ api_tables = {
         'params_default': {}
     },
     'user.list': {
-        'method': "GET",
-        'service': "cam",
+        'method': 'GET',
+        'service': 'cam',
         'url': 'https://cam.api.qcloud.com/v2/index.php',
         'action': 'ListUsers',
-        'params_default': {"region": "ap-beijing"}
+        'params_default': {'region': 'ap-beijing'}
     },
     'policy.list': {
         'method': "GET",
-        'service': "cam",
+        'service': 'cam',
         'url': 'https://cam.api.qcloud.com/v2/index.php',
         'action': 'ListPolicies',
-        'params_default': {"region": "ap-beijing"}
+        'params_default': {'region': 'ap-beijing'}
     },
     'policy.listentitiesforpolicy': {
-        'method': "GET",
-        'service': "cam",
+        'method': 'GET',
+        'service': 'cam',
         'url': 'https://cam.api.qcloud.com/v2/index.php',
         'action': 'ListEntitiesForPolicy',
         'params_default': {'region': 'ap-beijing', 'policyId': 1}
+    },
+    'policy.listattacheduserpolicies': {
+        'method': 'GET',
+        'service': 'cam',
+        'url': 'https://cam.api.qcloud.com/v2/index.php',
+        'action': 'ListAttachedUserPolicies',
+        'params_default': {'uin': '100009129850'}
     }
 }
 
@@ -71,17 +78,22 @@ if __name__ == "__main__":
     #print(json.dumps(j,indent=4, ensure_ascii=False))
 
 
-    ## 查询所有用户 https://cloud.tencent.com/document/api/598/15297
-    #h = api_call('user.list')
-    #k = json.loads(h.text)
-    #print(json.dumps(k, indent=4, ensure_ascii=False))
+    # 查询所有用户 https://cloud.tencent.com/document/api/598/15297
+    h = api_call('user.list')
+    k = json.loads(h.text)
+    print(json.dumps(k, indent=4, ensure_ascii=False))
 
-    # 查询所有策略 https://cloud.tencent.com/document/api/598/15426
-    l = api_call('policy.list')
-    m = json.loads(l.text)
-    print(json.dumps(m, indent=4, ensure_ascii=False))
+    # # 查询所有策略 https://cloud.tencent.com/document/api/598/15426
+    # l = api_call('policy.list')
+    # m = json.loads(l.text)
+    # print(json.dumps(m, indent=4, ensure_ascii=False))
 
-    # 查询所有策略关联的实体 https://cloud.tencent.com/document/api/598/15425
-    o = api_call('policy.listentitiesforpolicy')
+    # # 查询所有策略关联的实体 https://cloud.tencent.com/document/api/598/15425
+    # o = api_call('policy.listentitiesforpolicy')
+    # p = json.loads(o.text)
+    # print(json.dumps(p, indent=4, ensure_ascii=False))
+
+    # 查询某个指定子账号关联的所有策略 https://cloud.tencent.com/document/api/598/15423
+    o = api_call('policy.listattacheduserpolicies')
     p = json.loads(o.text)
     print(json.dumps(p, indent=4, ensure_ascii=False))
