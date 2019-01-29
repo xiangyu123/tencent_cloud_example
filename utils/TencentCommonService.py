@@ -9,6 +9,7 @@ import time
 import requests
 from datetime import datetime
 from pathlib import Path
+from urllib3.request import urlencode
 
 
 class TencentCommonService:
@@ -44,26 +45,16 @@ class TencentCommonService:
                          self.signed_headers + "\n" +
                          hashed_request_payload)
             self.canonical_request = canonical_request
-
-    def dictToStr(self, dictData):
-        x = '&'.join(["{}={}".format(k, v) for k, v in dictData.items()])
-        return x
-
-    def signStrFun(self, dictData):
-        tempList = []
-        resultList = []
-        tempDict = {}
-        for eveKey, eveValue in dictData.items():
-            tempLowerData = eveKey.lower()
-            tempList.append(tempLowerData)
-            tempDict[tempLowerData] = eveKey
-        tempList.sort()
-        for eveData in tempList:
-            tempStr = str(tempDict[eveData]) + "=" + str(dictData[tempDict[eveData]])
-            resultList.append(tempStr)
-        j = "&".join(resultList)
-        # print("j is", j)
-        return j
+        elif self.method == "GET":
+            self.signDictData = {
+               'Action': self.action,
+               'Nonce': int(random.random()*10000),
+               'Region': self.region,
+               'SecretId': self.secret_id,
+               'SignatureMethod': self.signMethod,
+               'Timestamp': self.timestamp,
+            }
+            self.signDictData.update(payload_params)
 
     # 生成待签名的字符串
     def gen_sign_str(self):
@@ -78,17 +69,10 @@ class TencentCommonService:
                       hashed_canonical_request)
             self.string_to_sign = string_to_sign
         elif self.method == "GET":
-            self.signDictData = {
-                'Action': self.action,
-                'Nonce': int(random.random()*10000),
-                'Region': self.region,
-                'SecretId': self.secret_id,
-                'SignatureMethod': self.signMethod,
-                'Timestamp': self.timestamp,
-            }
+            # query_string = requests.utils.urlparse(requests.get(self.url, params=self.signDictData).url).query
+            query_string = urlencode(self.signDictData)
             self.string_to_sign = "%s%s%s%s"%(self.method, self.url.split('//')[1], "?",
-                                              self.signStrFun(self.signDictData))
-
+                                              query_string)
     # 签名算法
     def sign(self, key, msg):
         if self.method == "POST":
@@ -115,7 +99,6 @@ class TencentCommonService:
         elif self.method == "GET":
             signData = requests.utils.unquote(self.sign(self.secret_key, self.string_to_sign))
             self.signDictData.update({"Signature": signData})
-
 
     # 生成authorization
     def gen_authorization(self):
